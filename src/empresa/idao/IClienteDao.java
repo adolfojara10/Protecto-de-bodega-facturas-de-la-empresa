@@ -6,7 +6,7 @@
 package empresa.idao;
 
 import empresa.modelo.Cliente;
-import java.util.List;
+import java.sql.ResultSet;
 
 /**
  *
@@ -22,6 +22,6 @@ public interface IClienteDao {
     
     public void delete(String cedula);
     
-    public List<Cliente> findAll();
+    public ResultSet findAll();
     
 }

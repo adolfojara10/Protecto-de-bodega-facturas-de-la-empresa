@@ -7,6 +7,7 @@ package empresa.controlador;
 
 import empresa.dao.ClienteDaoImpl;
 import empresa.modelo.Cliente;
+import java.sql.ResultSet;
 
 
 /**
@@ -38,6 +39,7 @@ public class ControladorCliente {
     }
     
     public Cliente readCliente(String cedula){
+        
         return clienteDao.read(cedula);
         
     }
@@ -56,5 +58,9 @@ public class ControladorCliente {
         clienteDao.delete(cedula);
     }
     
+    public ResultSet findAll(){
+        return clienteDao.findAll();
+    }
+            
     
 }

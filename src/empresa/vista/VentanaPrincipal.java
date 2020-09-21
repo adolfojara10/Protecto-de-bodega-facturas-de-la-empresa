@@ -265,6 +265,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             panelInicio.setVisible(false);
             menuItemCerrarSesion.setEnabled(true);
+            
+            
+            controladorCliente.findAll();
 
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
@@ -292,6 +295,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtPassword.setText("");
                 txtUsuario.setText("");
                 panelInicio.setVisible(false);
+                
+                menuItemCerrarSesion.setEnabled(true);
+                
+                
+                controladorCliente.findAll();
+                
 
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");

@@ -6,7 +6,9 @@
 package empresa.vista;
 
 import empresa.controlador.ControladorCliente;
+import empresa.modelo.Cliente;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -50,6 +52,9 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Cliente");
@@ -90,13 +95,32 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         });
 
         btnCrear.setBackground(new java.awt.Color(51, 51, 255));
-        btnCrear.setForeground(new java.awt.Color(0, 0, 0));
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
             }
         });
+
+        btnBuscar.setBackground(new java.awt.Color(49, 37, 220));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setBackground(new java.awt.Color(255, 102, 102));
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setBackground(new java.awt.Color(102, 102, 255));
+        btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,28 +131,35 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel7))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(btnCrear))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCrear)
-                        .addGap(45, 45, 45)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbxTipoTelefono, 0, 179, Short.MAX_VALUE)
-                    .addComponent(txtNombre)
-                    .addComponent(txtApellido)
-                    .addComponent(txtCorreo)
-                    .addComponent(txtFormattedCedula)
-                    .addComponent(txtFormattedTelefono)
-                    .addComponent(txtDireccion))
-                .addGap(57, 57, 57))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxTipoTelefono, 0, 179, Short.MAX_VALUE)
+                            .addComponent(txtNombre)
+                            .addComponent(txtApellido)
+                            .addComponent(txtCorreo)
+                            .addComponent(txtFormattedCedula)
+                            .addComponent(txtFormattedTelefono)
+                            .addComponent(txtDireccion))
+                        .addGap(42, 42, 42))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)
+                        .addGap(36, 36, 36))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +193,11 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnCrear)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrear)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnEditar))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -171,16 +206,16 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(31, 31, 31)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,21 +243,54 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         String telefono = txtFormattedTelefono.getText();
         String direccion = txtDireccion.getText();
 
-        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() ||
-                telefono.isEmpty() || direccion.isEmpty()) {
-            
+        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty()
+                || telefono.isEmpty() || direccion.isEmpty()) {
+
             JOptionPane.showMessageDialog(this, "Todos los campos son necesarios de llenar");
         } else {
             controladorCliente.createCliente(nombre, apellido, cedula, telefono, direccion, correo);
             JOptionPane.showMessageDialog(this, "Usuario creado con exito");
             limpiar();
-            
+
         }
 
     }//GEN-LAST:event_btnCrearActionPerformed
 
-    
-    public void limpiar(){
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+
+        String cedula = txtFormattedCedula.getText();
+
+        if (cedula.length() != 10) {
+            JOptionPane.showMessageDialog(this, "Llene el campo cedula para buscar un cliente");
+        } else {
+            Cliente cliente = controladorCliente.readCliente(cedula);
+
+            if (cliente == null) {
+                JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+            } else {
+                txtNombre.setText(cliente.getNombres());
+                txtApellido.setText(cliente.getApellidos());
+                txtCorreo.setText(cliente.getCorreo());
+                txtFormattedTelefono.setValue(cliente.getTelefono());
+                txtDireccion.setText(cliente.getDireccion());
+                
+                btnEditar.setEnabled(true);
+                btnCrear.setEnabled(false);
+            }
+
+        }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        
+        limpiar();
+        
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    public void limpiar() {
         txtFormattedCedula.setValue("");
         txtNombre.setText("");
         txtApellido.setText("");
@@ -230,10 +298,16 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         txtFormattedTelefono.setValue("");
         txtDireccion.setText("");
         
+        btnCrear.setEnabled(true);
+        btnEditar.setEnabled(false);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbxTipoTelefono;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
