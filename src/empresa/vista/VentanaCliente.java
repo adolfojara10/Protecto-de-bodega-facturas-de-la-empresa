@@ -208,8 +208,9 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         String telefono = txtFormattedTelefono.getText();
         String direccion = txtDireccion.getText();
 
-        if (cedula == null || nombre == null || apellido == null || correo == null ||
-                telefono == null || direccion == null) {
+        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() ||
+                telefono.isEmpty() || direccion.isEmpty()) {
+            
             JOptionPane.showMessageDialog(this, "Todos los campos son necesarios de llenar");
         } else {
             controladorCliente.createCliente(nombre, apellido, cedula, telefono, direccion, correo);

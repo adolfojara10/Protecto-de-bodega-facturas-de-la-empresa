@@ -6,6 +6,7 @@
 package empresa.vista;
 
 import empresa.controlador.ControladorCliente;
+import empresa.dao.ClienteDaoImpl;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    private ClienteDaoImpl clienteDAO;
     private ControladorCliente controladorCliente;
     
     private VentanaCliente ventanaCliente;
@@ -33,7 +35,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public VentanaPrincipal() {
         initComponents();
         
-        controladorCliente = new ControladorCliente();
+        clienteDAO = new ClienteDaoImpl();
+        controladorCliente = new ControladorCliente(clienteDAO);
         
         ventanaCliente = new VentanaCliente(controladorCliente);
         ventanaFactura = new VentanaFactura(controladorCliente);
@@ -161,10 +164,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuOpciones.setMnemonic('f');
         menuOpciones.setText("Opciones");
-        menuOpciones.setEnabled(false);
 
         menuItemCerrarSesion.setMnemonic('o');
         menuItemCerrarSesion.setText("Cerrar Sesion");
+        menuItemCerrarSesion.setEnabled(false);
         menuItemCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemCerrarSesionActionPerformed(evt);
@@ -261,6 +264,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             txtPassword.setText("");
 
             panelInicio.setVisible(false);
+            menuItemCerrarSesion.setEnabled(true);
 
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
@@ -305,6 +309,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void menuItemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCerrarSesionActionPerformed
         // TODO add your handling code here:
         cerrarVentanas();
+        menuBodega.setEnabled(false);
+        menuGestion.setEnabled(false);
+        menuItemCerrarSesion.setEnabled(false);
         
         panelInicio.setVisible(true);
         

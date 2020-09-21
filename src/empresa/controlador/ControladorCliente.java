@@ -19,6 +19,11 @@ public class ControladorCliente {
     
     private ClienteDaoImpl clienteDao;
 
+    public ControladorCliente(ClienteDaoImpl clienteDao) {
+        
+        this.clienteDao = clienteDao;
+    }
+
     
 
 

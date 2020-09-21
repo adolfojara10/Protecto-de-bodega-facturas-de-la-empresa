@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import empresa.idao.IClienteDao;
 import empresa.modelo.Cliente;
 import java.util.List;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,12 +22,14 @@ import java.util.logging.Logger;
  */
 public class ClienteDaoImpl implements IClienteDao{
 
+    private Connection conexion;
+    
     public ClienteDaoImpl() {
         
         String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\Empresa.accdb";
         
         try {
-            Connection conexion = DriverManager.getConnection(databaseURL);
+            conexion = DriverManager.getConnection(databaseURL);
             System.out.println("Conectado a la base de datos");
             
         } catch (SQLException ex) {
@@ -38,7 +41,30 @@ public class ClienteDaoImpl implements IClienteDao{
     
     @Override
     public void create(Cliente cliente) {
-        
+        try{
+            
+            String commandoSQL = "INSERT INTO Clientes (Cedula, Nombre, Apellido, Correo, Telefono, Direccion) VALUES (?,?,?,?,?,?)";
+            
+            PreparedStatement preparedStatement = conexion.prepareStatement(commandoSQL);
+            
+            preparedStatement.setString(1, cliente.getCedula());
+            preparedStatement.setString(2, cliente.getNombres());
+            preparedStatement.setString(3, cliente.getApellidos());
+            preparedStatement.setString(4, cliente.getCorreo());
+            preparedStatement.setString(5, cliente.getTelefono());
+            preparedStatement.setString(6, cliente.getDireccion());
+            
+            int rows = preparedStatement.executeUpdate();
+            
+            if(rows > 0){
+                System.out.println("Fila añadida");
+            }
+            
+            
+            
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
