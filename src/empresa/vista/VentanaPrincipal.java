@@ -7,6 +7,9 @@ package empresa.vista;
 
 import empresa.controlador.ControladorCliente;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -37,8 +40,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         desktopPane.add(ventanaCliente);
         desktopPane.add(ventanaFactura);
-        
-        
+              
+                
     }
 
     /**

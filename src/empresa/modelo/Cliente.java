@@ -17,14 +17,16 @@ public class Cliente {
     private String apellidos;
     private String cedula;
     private String telefono;
-    private Direccion direccion;
+    private String direccion;
+    private String correo;
 
-    public Cliente(String nombres, String apellidos, String cedula, String telefono, Direccion direccion) {
+    public Cliente(String nombres, String apellidos, String cedula, String telefono, String direccion, String correo) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.cedula = cedula;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.correo = correo;
     }
 
     public String getNombres() {
@@ -59,14 +61,23 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public Direccion getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(Direccion direccion) {
+    public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

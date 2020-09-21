@@ -7,7 +7,7 @@ package empresa.controlador;
 
 import empresa.dao.ClienteDaoImpl;
 import empresa.modelo.Cliente;
-import empresa.modelo.Direccion;
+
 
 /**
  *
@@ -16,7 +16,6 @@ import empresa.modelo.Direccion;
 public class ControladorCliente {
     
     private Cliente cliente;
-    private Direccion direccion;
     
     private ClienteDaoImpl clienteDao;
 
@@ -24,10 +23,10 @@ public class ControladorCliente {
 
 
     public void createCliente(String nombres, String apellidos, String cedula, String telefono, 
-            String calleP, String calleS, String calleN){
+            String direccion, String correo){
         
-        direccion = new Direccion(calleP, calleS, calleN);
-        cliente = new Cliente(nombres, apellidos, cedula, telefono, direccion);
+        
+        cliente = new Cliente(nombres, apellidos, cedula, telefono, direccion, correo);
         
         clienteDao.create(cliente);
     
@@ -39,10 +38,10 @@ public class ControladorCliente {
     }
     
     public void updateCliente(String nombres, String apellidos, String cedula, String telefono, 
-            String calleP, String calleS, String calleN){
+            String direccion, String correo){
         
-        direccion = new Direccion(calleP, calleS, calleN);
-        cliente = new Cliente(nombres, apellidos, cedula, telefono, direccion);
+        
+        cliente = new Cliente(nombres, apellidos, cedula, telefono, direccion, correo);
         
         clienteDao.update(cliente);
     
