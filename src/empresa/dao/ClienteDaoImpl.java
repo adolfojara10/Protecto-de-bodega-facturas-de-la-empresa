@@ -97,6 +97,29 @@ public class ClienteDaoImpl implements IClienteDao {
     @Override
     public void update(Cliente cliente) {
 
+        try {
+            String commandoSQL = "UPDATE Clientes SET Cedula=?, Nombre=?, Apellido=?, Correo=?, Telefono=?, Direccion=? WHERE Cedula=?";
+
+            PreparedStatement preparedStatement = conexion.prepareStatement(commandoSQL);
+
+            preparedStatement.setString(1, cliente.getCedula());
+            preparedStatement.setString(2, cliente.getNombres());
+            preparedStatement.setString(3, cliente.getApellidos());
+            preparedStatement.setString(4, cliente.getCorreo());
+            preparedStatement.setString(5, cliente.getTelefono());
+            preparedStatement.setString(6, cliente.getDireccion());
+            preparedStatement.setString(7, cliente.getCedula());
+
+            int filasActualizadas = preparedStatement.executeUpdate();
+            
+            if (filasActualizadas > 0) {
+                System.out.println("Fila actualizada");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

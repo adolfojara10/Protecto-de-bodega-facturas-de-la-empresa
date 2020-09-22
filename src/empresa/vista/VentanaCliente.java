@@ -88,12 +88,6 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Dirección:");
 
-        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtDireccionKeyPressed(evt);
-            }
-        });
-
         btnCrear.setBackground(new java.awt.Color(51, 51, 255));
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +115,11 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         btnEditar.setBackground(new java.awt.Color(102, 102, 255));
         btnEditar.setText("Editar");
         btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -221,18 +220,6 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyPressed
-        // TODO add your handling code here:
-
-        if (txtFormattedCedula.getText() != null && txtNombre.getText() != null && txtApellido.getText() != null
-                && txtCorreo.getText() != null && txtFormattedTelefono.getText() != null && txtDireccion.getText() != null) {
-
-            btnCrear.setEnabled(true);
-
-        }
-
-    }//GEN-LAST:event_txtDireccionKeyPressed
-
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
 
@@ -289,6 +276,30 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         limpiar();
         
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        
+        String cedula = txtFormattedCedula.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String correo = txtCorreo.getText();
+        String telefono = txtFormattedTelefono.getText();
+        String direccion = txtDireccion.getText();
+
+        if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty()
+                || telefono.isEmpty() || direccion.isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Todos los campos son necesarios de llenar");
+        } else {
+            controladorCliente.updateCliente(nombre, apellido, cedula, telefono, direccion, correo);
+            JOptionPane.showMessageDialog(this, "Usuario actualizado con exito");
+            limpiar();
+
+        }
+        
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     public void limpiar() {
         txtFormattedCedula.setValue("");
