@@ -99,6 +99,7 @@ public class ProductoDaoImpl implements IProductoDao {
             preparedStatement.setString(3, producto.getCategoria());
             preparedStatement.setDouble(4, producto.getPrecio());
             preparedStatement.setInt(5, producto.getStock());
+            preparedStatement.setString(6, producto.getCodigo());
 
             int filaUpdate = preparedStatement.executeUpdate();
 
@@ -148,8 +149,9 @@ public class ProductoDaoImpl implements IProductoDao {
                         resultado.getString("Descripcion"), resultado.getString("Categoria"), resultado.getDouble("Precio"));
                 
                 listaProductos.put(producto.getCodigo(), producto);
-                return listaProductos;
+                
             }
+            return listaProductos;
 
         } catch (SQLException e) {
             e.printStackTrace();

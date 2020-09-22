@@ -6,6 +6,7 @@
 package empresa.vista;
 
 import empresa.controlador.ControladorCliente;
+import empresa.modelo.Producto;
 import javax.swing.JOptionPane;
 
 /**
@@ -49,7 +50,7 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
         btnCrear = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
@@ -91,17 +92,37 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
 
         btnBuscar.setBackground(new java.awt.Color(102, 102, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(51, 0, 255));
-        jButton1.setText("Actualizar");
-        jButton1.setEnabled(false);
+        btnActualizar.setBackground(new java.awt.Color(51, 0, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setEnabled(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setBackground(new java.awt.Color(255, 51, 51));
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -133,7 +154,7 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
                         .addGap(23, 23, 23)
                         .addComponent(btnBuscar)
                         .addGap(39, 39, 39)
-                        .addComponent(jButton1)
+                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
                         .addGap(32, 32, 32)
@@ -172,7 +193,7 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
                     .addComponent(btnBuscar)
-                    .addComponent(jButton1)
+                    .addComponent(btnActualizar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnEliminar))
                 .addContainerGap())
@@ -235,44 +256,118 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String codigo = txtCodigo.getText();
         String descripcion = txtAreaDescripcion.getText();
-        String stock = txtFormattedStock.getText();
-        String precio = txtFormattedPrecio.getText();
+        int stock = Integer.valueOf(txtFormattedStock.getText());
+        double precio = Double.parseDouble(txtFormattedPrecio.getText());
         String categoria = cbxCategoria.getSelectedItem().toString();
 
-        if (codigo.isEmpty() || descripcion.isEmpty() || stock.isEmpty() || precio.isEmpty() || categoria.isEmpty()) {
+        if (codigo.isEmpty() || descripcion.isEmpty() || stock == 0 || precio == 0 || categoria.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Llene todos los campos del producto");
         } else {
+            /*
             if (controladorCliente.comprobarExistenciaProducto(codigo)) {
                 JOptionPane.showMessageDialog(this, "El código del producto ya existe");
             } else {
-                controladorCliente.crearProducto(codigo, Integer.parseInt(stock), descripcion, categoria, Double.parseDouble(precio));
-                JOptionPane.showMessageDialog(this, "Producto creado con exito");
-                limpiar();
-            }
+                
+            }*/
+
+            controladorCliente.crearProducto(codigo, stock, descripcion, categoria, precio);
+            JOptionPane.showMessageDialog(this, "Producto creado con exito");
+            limpiar();
 
         }
 
     }//GEN-LAST:event_btnCrearActionPerformed
 
-    
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+
+        String codigo = txtCodigo.getText();
+
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Llene el campo codigo para buscar un producto");
+        } else {
+            Producto producto = controladorCliente.readProducto(codigo);
+            if (producto != null) {
+                txtCodigo.setText(producto.getCodigo());
+                txtAreaDescripcion.setText(producto.getDescripcion());
+                txtFormattedStock.setValue(producto.getStock());
+                txtFormattedPrecio.setValue(producto.getPrecio());
+                cbxCategoria.setSelectedItem(producto.getCategoria());
+
+                btnCrear.setEnabled(false);
+                btnEliminar.setEnabled(true);
+                btnActualizar.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Producto no encontrado");
+            }
+
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        String codigo = txtCodigo.getText();
+        String descripcion = txtAreaDescripcion.getText();
+        int stock = Integer.valueOf(txtFormattedStock.getText());
+        double precio = Double.parseDouble(txtFormattedPrecio.getText());
+        String categoria = cbxCategoria.getSelectedItem().toString();
+
+        if (codigo.isEmpty() || descripcion.isEmpty() || stock == 0 || precio == 0 || categoria.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Llene todos los campos del producto");
+        } else {
+            /*
+            if (controladorCliente.comprobarExistenciaProducto(codigo)) {
+                JOptionPane.showMessageDialog(this, "El código del producto ya existe");
+            } else {
+                
+            }*/
+
+            controladorCliente.actualizarProducto(codigo, stock, descripcion, categoria, precio);
+            JOptionPane.showMessageDialog(this, "Producto actualizado con exito");
+            limpiar();
+
+        }
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (controladorCliente.comprobarExistenciaProducto(txtCodigo.getText())) {
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro desea eliminar este producto?");
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                controladorCliente.deleteProducto(txtCodigo.getText());
+                JOptionPane.showMessageDialog(this, "Producto eliminado");
+                limpiar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error. Asegurese que no haya editado el codigo del producto antes de eliminarlo");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     public void limpiar() {
         txtCodigo.setText("");
         txtAreaDescripcion.setText("");
-        txtFormattedPrecio.setValue("");
-        txtFormattedStock.setValue("");
+        txtFormattedPrecio.setValue(0);
+        txtFormattedStock.setValue(0);
         tblProductos.clearSelection();
-        
-        
+        btnCrear.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnActualizar.setEnabled(false);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbxCategoria;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

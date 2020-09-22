@@ -67,9 +67,21 @@ public class ControladorCliente {
      *
      * para los productos
      */
+    
+    
+    /**
+     * 
+     * @param codigo
+     * @param stock
+     * @param descripcion
+     * @param categoria
+     * @param precio 
+     */
     public void crearProducto(String codigo, int stock, String descripcion, String categoria, double precio) {
 
         producto = new Producto(codigo, stock, descripcion, categoria, precio);
+        System.out.println(producto.toString());
+        System.out.println(codigo + stock + descripcion + categoria + precio);
         productoDao.create(producto);
 
     }
@@ -96,7 +108,7 @@ public class ControladorCliente {
     public boolean comprobarExistenciaProducto(String codigo) {
         Map<String, Producto> listaProductos = new HashMap<>();
         listaProductos = productoDao.findAll();
-
+        System.out.println(listaProductos.toString());
         if (listaProductos.containsKey(codigo)) {
             return true;
         } else {

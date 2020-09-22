@@ -23,6 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private ClienteDaoImpl clienteDAO;
     private ProductoDaoImpl productoDAO;
+    
     private ControladorCliente controladorCliente;
     
     private VentanaCliente ventanaCliente;
@@ -39,6 +40,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         
         clienteDAO = new ClienteDaoImpl();
+        productoDAO = new ProductoDaoImpl();
+        
         controladorCliente = new ControladorCliente(clienteDAO, productoDAO);
         
         ventanaCliente = new VentanaCliente(controladorCliente);
