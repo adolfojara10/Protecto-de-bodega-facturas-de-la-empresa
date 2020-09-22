@@ -10,6 +10,8 @@ import empresa.modelo.Producto;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -131,7 +133,7 @@ public class ProductoDaoImpl implements IProductoDao {
     }
 
     @Override
-    public List<Producto> findAll() {
+    public Map<String, Producto> findAll() {
         try {
             comandoSQL = "SELECT * FROM Producto";
 
@@ -139,13 +141,13 @@ public class ProductoDaoImpl implements IProductoDao {
             
             ResultSet resultado = statement.executeQuery(comandoSQL);
 
-            List<Producto> listaProductos = new ArrayList<>();
+            Map<String,Producto> listaProductos = new HashMap<>();
             
             while (resultado.next()) {
                 Producto producto = new Producto(resultado.getString("Codigo"), resultado.getInt("Stock"),
                         resultado.getString("Descripcion"), resultado.getString("Categoria"), resultado.getDouble("Precio"));
                 
-                listaProductos.add(producto);
+                listaProductos.put(producto.getCodigo(), producto);
                 return listaProductos;
             }
 

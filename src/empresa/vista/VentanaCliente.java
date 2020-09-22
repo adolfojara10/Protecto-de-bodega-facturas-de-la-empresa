@@ -57,6 +57,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setTitle("Cliente");
         setToolTipText("");
 

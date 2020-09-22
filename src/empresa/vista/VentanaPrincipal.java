@@ -7,6 +7,7 @@ package empresa.vista;
 
 import empresa.controlador.ControladorCliente;
 import empresa.dao.ClienteDaoImpl;
+import empresa.dao.ProductoDaoImpl;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,10 +22,12 @@ import javax.swing.JOptionPane;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     private ClienteDaoImpl clienteDAO;
+    private ProductoDaoImpl productoDAO;
     private ControladorCliente controladorCliente;
     
     private VentanaCliente ventanaCliente;
     private VentanaFactura ventanaFactura;
+    private VentanaBodega ventanaBodega;
     
     
     
@@ -36,14 +39,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         
         clienteDAO = new ClienteDaoImpl();
-        controladorCliente = new ControladorCliente(clienteDAO);
+        controladorCliente = new ControladorCliente(clienteDAO, productoDAO);
         
         ventanaCliente = new VentanaCliente(controladorCliente);
         ventanaFactura = new VentanaFactura(controladorCliente);
+        ventanaBodega = new VentanaBodega(controladorCliente);
         
         desktopPane.add(ventanaCliente);
         desktopPane.add(ventanaFactura);
-              
+        desktopPane.add(ventanaBodega);
                 
     }
 
@@ -73,8 +77,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuItemCliente = new javax.swing.JMenuItem();
         menuItemFactura = new javax.swing.JMenuItem();
         menuBodega = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        menuItemBodega = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
@@ -214,13 +217,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuBodega.setText("Bodega");
         menuBodega.setEnabled(false);
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Piso Flotante");
-        menuBodega.add(contentMenuItem);
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("Granito");
-        menuBodega.add(aboutMenuItem);
+        menuItemBodega.setMnemonic('c');
+        menuItemBodega.setLabel("Bodega");
+        menuItemBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemBodegaActionPerformed(evt);
+            }
+        });
+        menuBodega.add(menuItemBodega);
 
         menuBar.add(menuBodega);
 
@@ -339,6 +343,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaFactura.setVisible(true);
     }//GEN-LAST:event_menuItemFacturaActionPerformed
 
+    private void menuItemBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBodegaActionPerformed
+        // TODO add your handling code here:
+        cerrarVentanas();
+        ventanaBodega.setVisible(true);
+    }//GEN-LAST:event_menuItemBodegaActionPerformed
+
     
     
  
@@ -380,15 +390,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void cerrarVentanas(){
         ventanaCliente.setVisible(false);
         ventanaFactura.setVisible(false);
+        ventanaBodega.setVisible(false);
         panelInicio.setVisible(false);
     }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIniciar;
-    private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JLabel jLabel1;
@@ -397,6 +406,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuBodega;
     private javax.swing.JMenu menuGestion;
+    private javax.swing.JMenuItem menuItemBodega;
     private javax.swing.JMenuItem menuItemCerrarSesion;
     private javax.swing.JMenuItem menuItemCliente;
     private javax.swing.JMenuItem menuItemFactura;

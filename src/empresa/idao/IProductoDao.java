@@ -6,7 +6,7 @@
 package empresa.idao;
 
 import empresa.modelo.Producto;
-import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -22,5 +22,5 @@ public interface IProductoDao {
     
     public void delete(String codigo);
     
-    public List<Producto> findAll();
+    public Map<String, Producto> findAll();
 }
