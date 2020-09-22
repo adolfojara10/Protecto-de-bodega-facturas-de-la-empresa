@@ -111,7 +111,7 @@ public class ClienteDaoImpl implements IClienteDao {
             preparedStatement.setString(7, cliente.getCedula());
 
             int filasActualizadas = preparedStatement.executeUpdate();
-            
+
             if (filasActualizadas > 0) {
                 System.out.println("Fila actualizada");
             }
@@ -124,7 +124,20 @@ public class ClienteDaoImpl implements IClienteDao {
 
     @Override
     public void delete(String cedula) {
+        try {
+            String comandoSQL = "DELETE FROM Clientes WHERE Cedula=?";
 
+            PreparedStatement ps = conexion.prepareStatement(comandoSQL);
+            ps.setString(1, cedula);
+
+            int filaEliminada = ps.executeUpdate();
+            if (filaEliminada > 0) {
+                System.out.println("Usuario eliminado");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
