@@ -158,5 +158,31 @@ public class ProductoDaoImpl implements IProductoDao {
         }
         return null;
     }
+    
+    @Override
+    public List<Producto> findAllArray(){
+        try {
+            comandoSQL = "SELECT * FROM Producto";
+
+            statement = conexion.createStatement();
+            
+            ResultSet resultado = statement.executeQuery(comandoSQL);
+
+            List<Producto> listaProductos = new ArrayList<>();
+            
+            while (resultado.next()) {
+                Producto producto = new Producto(resultado.getString("Codigo"), resultado.getInt("Stock"),
+                        resultado.getString("Descripcion"), resultado.getString("Categoria"), resultado.getDouble("Precio"));
+                
+                listaProductos.add(producto);
+                
+            }
+            return listaProductos;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

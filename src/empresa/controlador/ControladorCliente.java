@@ -11,6 +11,7 @@ import empresa.modelo.Cliente;
 import empresa.modelo.Producto;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -105,6 +106,10 @@ public class ControladorCliente {
         return productoDao.findAll();
     }
 
+    public List<Producto> arrayProducto(){
+        return productoDao.findAllArray();
+    }
+    
     public boolean comprobarExistenciaProducto(String codigo) {
         Map<String, Producto> listaProductos = new HashMap<>();
         listaProductos = productoDao.findAll();

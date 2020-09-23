@@ -8,6 +8,7 @@ package empresa.vista;
 import empresa.controlador.ControladorCliente;
 import empresa.modelo.Producto;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,11 +20,15 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VentanaBodega
+     *
+     * @param controladorCliente
      */
     public VentanaBodega(ControladorCliente controladorCliente) {
         initComponents();
 
         this.controladorCliente = controladorCliente;
+
+        llenarTablaProductos();
     }
 
     /**
@@ -223,6 +228,11 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
             }
         });
         tblProductos.getTableHeader().setReorderingAllowed(false);
+        tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblProductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,6 +283,7 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
             controladorCliente.crearProducto(codigo, stock, descripcion, categoria, precio);
             JOptionPane.showMessageDialog(this, "Producto creado con exito");
             limpiar();
+            llenarTablaProductos();
 
         }
 
@@ -330,6 +341,7 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
             controladorCliente.actualizarProducto(codigo, stock, descripcion, categoria, precio);
             JOptionPane.showMessageDialog(this, "Producto actualizado con exito");
             limpiar();
+            llenarTablaProductos();
 
         }
 
@@ -343,11 +355,51 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
                 controladorCliente.deleteProducto(txtCodigo.getText());
                 JOptionPane.showMessageDialog(this, "Producto eliminado");
                 limpiar();
+                llenarTablaProductos();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Error. Asegurese que no haya editado el codigo del producto antes de eliminarlo");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
+        // TODO add your handling code here:
+        int filaSeleccionada = tblProductos.getSelectedRow();
+
+        String codigo = (String) tblProductos.getValueAt(filaSeleccionada, 0);
+        String descripcion = (String) tblProductos.getValueAt(filaSeleccionada, 1);
+        int stock = (int) tblProductos.getValueAt(filaSeleccionada, 2);
+        double precio = (double) tblProductos.getValueAt(filaSeleccionada, 3);
+        String categoria = (String) tblProductos.getValueAt(filaSeleccionada, 4);
+
+        txtCodigo.setText(codigo);
+        txtAreaDescripcion.setText(descripcion);
+        txtFormattedPrecio.setValue((Object) precio);
+        txtFormattedStock.setValue((Object) stock);
+        cbxCategoria.setSelectedItem(categoria);
+
+        tblProductos.clearSelection();
+
+        btnCrear.setEnabled(false);
+        btnEliminar.setEnabled(true);
+        btnActualizar.setEnabled(true);
+
+
+    }//GEN-LAST:event_tblProductosMouseClicked
+
+    public void llenarTablaProductos() {
+        DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
+
+        modelo.setRowCount(0);
+
+        for (Producto producto : controladorCliente.arrayProducto()) {
+            Object[] rowData = {producto.getCodigo(), producto.getDescripcion(), producto.getStock(),
+                producto.getPrecio(), producto.getCategoria()};
+            modelo.addRow(rowData);
+        }
+
+        tblProductos.setModel(modelo);
+    }
 
     public void limpiar() {
         txtCodigo.setText("");
