@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 public class Producto {
     
+    private int codigoSistema;
     private String codigo;
     private int Stock;
     private String descripcion;
@@ -26,8 +27,17 @@ public class Producto {
         this.categoria = categoria;
         this.precio = precio;
     }
-      
 
+    public Producto(int codigoSistema, String codigo, int Stock, String descripcion, String categoria, double precio) {
+        this.codigoSistema = codigoSistema;
+        this.codigo = codigo;
+        this.Stock = Stock;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+    }
+     
+    
     public String getCodigo() {
         return codigo;
     }
@@ -76,6 +86,15 @@ public class Producto {
         this.precio = precio;
     }
 
+    public int getCodigoSistema() {
+        return codigoSistema;
+    }
+
+    public void setCodigoSistema(int codigoSistema) {
+        this.codigoSistema = codigoSistema;
+    }
+
+    
     
     @Override
     public int hashCode() {

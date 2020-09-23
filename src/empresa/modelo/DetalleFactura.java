@@ -13,7 +13,8 @@ import java.util.Objects;
  */
 public class DetalleFactura {
     
-    private int idFactura;
+    private int codigoSistema;
+    private String idFactura;
     private int lineaFactura;
     private String idProducto;
     private String DescripcionProducto;
@@ -21,7 +22,8 @@ public class DetalleFactura {
     private double precioUnitario;
     private double precioVenta;
 
-    public DetalleFactura(int idFactura, int lineaFactura, String idProducto, String DescripcionProducto, int cantidad, double precioUnitario, double precioVenta) {
+    public DetalleFactura(String idFactura, int lineaFactura, String idProducto, 
+            String DescripcionProducto, int cantidad, double precioUnitario, double precioVenta) {
         this.idFactura = idFactura;
         this.lineaFactura = lineaFactura;
         this.idProducto = idProducto;
@@ -31,11 +33,24 @@ public class DetalleFactura {
         this.precioVenta = precioVenta;
     }
 
-    public int getIdFactura() {
+    public DetalleFactura(int codigoSistema, String idFactura, int lineaFactura, String idProducto, 
+            String DescripcionProducto, int cantidad, double precioUnitario, double precioVenta) {
+        this.codigoSistema = codigoSistema;
+        this.idFactura = idFactura;
+        this.lineaFactura = lineaFactura;
+        this.idProducto = idProducto;
+        this.DescripcionProducto = DescripcionProducto;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.precioVenta = precioVenta;
+    }
+        
+
+    public String getIdFactura() {
         return idFactura;
     }
 
-    public void setIdFactura(int idFactura) {
+    public void setIdFactura(String idFactura) {
         this.idFactura = idFactura;
     }
 
@@ -87,12 +102,23 @@ public class DetalleFactura {
         this.precioVenta = precioVenta;
     }
 
+    public int getCodigoSistema() {
+        return codigoSistema;
+    }
+
+    public void setCodigoSistema(int codigoSistema) {
+        this.codigoSistema = codigoSistema;
+    }
+       
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 41 * hash + Objects.hashCode(this.idProducto);
         return hash;
     }
+    
+    
 
     @Override
     public boolean equals(Object obj) {

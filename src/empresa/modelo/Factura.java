@@ -8,6 +8,7 @@ package empresa.modelo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -15,7 +16,8 @@ import java.util.List;
  */
 public class Factura {
 
-    private int numeroFactura;
+    private int codigoSistema;
+    private String numeroFactura;
     private Date fechaEmision;
     private String idCliente;
     private List<DetalleFactura> detallesFactura;
@@ -24,7 +26,7 @@ public class Factura {
     private double iva;
     private double total;
 
-    public Factura(int numeroFactura, Date fechaEmision, String idCliente, double subtotal, double descuento, double iva, double total) {
+    public Factura(String numeroFactura, Date fechaEmision, String idCliente, double subtotal, double descuento, double iva, double total) {
         this.numeroFactura = numeroFactura;
         this.fechaEmision = fechaEmision;
         this.idCliente = idCliente;
@@ -36,11 +38,25 @@ public class Factura {
         detallesFactura = new ArrayList<>();
     }
 
-    public int getNumeroFactura() {
+    public Factura(int codigoSistema, String numeroFactura, Date fechaEmision, String idCliente, double subtotal, double descuento, double iva, double total) {
+        this.codigoSistema = codigoSistema;
+        this.numeroFactura = numeroFactura;
+        this.fechaEmision = fechaEmision;
+        this.idCliente = idCliente;
+        this.subtotal = subtotal;
+        this.descuento = descuento;
+        this.iva = iva;
+        this.total = total;
+        
+        detallesFactura = new ArrayList<>();
+    }
+
+    
+    public String getNumeroFactura() {
         return numeroFactura;
     }
 
-    public void setNumeroFactura(int numeroFactura) {
+    public void setNumeroFactura(String numeroFactura) {
         this.numeroFactura = numeroFactura;
     }
 
@@ -111,12 +127,22 @@ public class Factura {
         }
     }
 
+    public int getCodigoSistema() {
+        return codigoSistema;
+    }
+
+    public void setCodigoSistema(int codigoSistema) {
+        this.codigoSistema = codigoSistema;
+    }
+
+    
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + this.numeroFactura;
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.numeroFactura);
         return hash;
     }
+   
 
     @Override
     public boolean equals(Object obj) {

@@ -23,35 +23,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private ClienteDaoImpl clienteDAO;
     private ProductoDaoImpl productoDAO;
-    
+
     private ControladorCliente controladorCliente;
-    
+
     private VentanaCliente ventanaCliente;
     private VentanaFactura ventanaFactura;
     private VentanaBodega ventanaBodega;
-    
-    
-    
-    
+    private VentanaRegistroFacturas ventanaRegistroFacturas;
+
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
+
         clienteDAO = new ClienteDaoImpl();
         productoDAO = new ProductoDaoImpl();
-        
+
         controladorCliente = new ControladorCliente(clienteDAO, productoDAO);
-        
+
         ventanaCliente = new VentanaCliente(controladorCliente);
         ventanaFactura = new VentanaFactura(controladorCliente);
         ventanaBodega = new VentanaBodega(controladorCliente);
-        
+        ventanaRegistroFacturas = new VentanaRegistroFacturas(controladorCliente);
+
         desktopPane.add(ventanaCliente);
         desktopPane.add(ventanaFactura);
         desktopPane.add(ventanaBodega);
-                
+
     }
 
     /**
@@ -76,11 +75,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuOpciones = new javax.swing.JMenu();
         menuItemCerrarSesion = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        menuGestion = new javax.swing.JMenu();
+        menuCrear = new javax.swing.JMenu();
         menuItemCliente = new javax.swing.JMenuItem();
         menuItemFactura = new javax.swing.JMenuItem();
         menuBodega = new javax.swing.JMenu();
         menuItemBodega = new javax.swing.JMenuItem();
+        menuGestion = new javax.swing.JMenu();
+        menuItemRegistroFacturas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
@@ -192,9 +193,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuOpciones);
 
-        menuGestion.setMnemonic('e');
-        menuGestion.setText("Gestión");
-        menuGestion.setEnabled(false);
+        menuCrear.setMnemonic('e');
+        menuCrear.setText("Crear");
+        menuCrear.setEnabled(false);
 
         menuItemCliente.setMnemonic('t');
         menuItemCliente.setText("Cliente");
@@ -203,7 +204,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 menuItemClienteActionPerformed(evt);
             }
         });
-        menuGestion.add(menuItemCliente);
+        menuCrear.add(menuItemCliente);
 
         menuItemFactura.setMnemonic('y');
         menuItemFactura.setText("Factura");
@@ -212,9 +213,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 menuItemFacturaActionPerformed(evt);
             }
         });
-        menuGestion.add(menuItemFactura);
+        menuCrear.add(menuItemFactura);
 
-        menuBar.add(menuGestion);
+        menuBar.add(menuCrear);
 
         menuBodega.setMnemonic('h');
         menuBodega.setText("Bodega");
@@ -230,6 +231,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuBodega.add(menuItemBodega);
 
         menuBar.add(menuBodega);
+
+        menuGestion.setText("Gestion");
+        menuGestion.setEnabled(false);
+
+        menuItemRegistroFacturas.setText("Registro Facturas");
+        menuGestion.add(menuItemRegistroFacturas);
+
+        menuBar.add(menuGestion);
 
         setJMenuBar(menuBar);
 
@@ -264,16 +273,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         } else if (usuario.equals("admin") && password.equals("1234")) {
 
             menuBodega.setEnabled(true);
-            menuGestion.setEnabled(true);
+            menuCrear.setEnabled(true);
             menuOpciones.setEnabled(true);
+            menuGestion.setEnabled(true);
 
             txtUsuario.setText("");
             txtPassword.setText("");
 
             panelInicio.setVisible(false);
             menuItemCerrarSesion.setEnabled(true);
-            
-            
+
             controladorCliente.findAll();
 
         } else {
@@ -296,18 +305,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             } else if (usuario.equals("admin") && password.equals("1234")) {
 
                 menuBodega.setEnabled(true);
-                menuGestion.setEnabled(true);
+                menuCrear.setEnabled(true);
                 menuOpciones.setEnabled(true);
+                menuGestion.setEnabled(true);
 
                 txtPassword.setText("");
                 txtUsuario.setText("");
                 panelInicio.setVisible(false);
-                
+
                 menuItemCerrarSesion.setEnabled(true);
-                
-                
+
                 controladorCliente.findAll();
-                
 
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
@@ -319,25 +327,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtPassword.setText("");
         txtUsuario.setText("");
-        
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void menuItemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCerrarSesionActionPerformed
         // TODO add your handling code here:
         cerrarVentanas();
         menuBodega.setEnabled(false);
-        menuGestion.setEnabled(false);
+        menuCrear.setEnabled(false);
         menuItemCerrarSesion.setEnabled(false);
-        
+        menuGestion.setEnabled(false);
+
         panelInicio.setVisible(true);
-        
+
     }//GEN-LAST:event_menuItemCerrarSesionActionPerformed
 
     private void menuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemClienteActionPerformed
         // TODO add your handling code here:
         cerrarVentanas();
         ventanaCliente.setVisible(true);
-        
+
     }//GEN-LAST:event_menuItemClienteActionPerformed
 
     private void menuItemFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFacturaActionPerformed
@@ -352,9 +361,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaBodega.setVisible(true);
     }//GEN-LAST:event_menuItemBodegaActionPerformed
 
-    
-    
- 
     /**
      * @param args the command line arguments
      */
@@ -390,14 +396,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
     }
 
-    public void cerrarVentanas(){
+    public void cerrarVentanas() {
         ventanaCliente.setVisible(false);
         ventanaFactura.setVisible(false);
         ventanaBodega.setVisible(false);
         panelInicio.setVisible(false);
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIniciar;
@@ -408,11 +414,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuBodega;
+    private javax.swing.JMenu menuCrear;
     private javax.swing.JMenu menuGestion;
     private javax.swing.JMenuItem menuItemBodega;
     private javax.swing.JMenuItem menuItemCerrarSesion;
     private javax.swing.JMenuItem menuItemCliente;
     private javax.swing.JMenuItem menuItemFactura;
+    private javax.swing.JMenuItem menuItemRegistroFacturas;
     private javax.swing.JMenu menuOpciones;
     private javax.swing.JPanel panelInicio;
     private javax.swing.JPasswordField txtPassword;

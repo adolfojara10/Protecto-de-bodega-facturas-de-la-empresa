@@ -13,6 +13,7 @@ import java.util.Objects;
  */
 public class Cliente {
     
+    private int codigoSistema;
     private String nombres;
     private String apellidos;
     private String cedula;
@@ -28,6 +29,17 @@ public class Cliente {
         this.direccion = direccion;
         this.correo = correo;
     }
+
+    public Cliente(int idCliente, String nombres, String apellidos, String cedula, String telefono, String direccion, String correo) {
+        this.codigoSistema = idCliente;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.cedula = cedula;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.correo = correo;
+    }
+        
 
     public String getNombres() {
         return nombres;
@@ -76,6 +88,16 @@ public class Cliente {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    public int getCodigoSistema() {
+        return codigoSistema;
+    }
+
+    public void setCodigoSistema(int codigoSistema) {
+        this.codigoSistema = codigoSistema;
+    }
+    
+    
     
     
     @Override
