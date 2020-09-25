@@ -26,7 +26,7 @@ public class ClienteDaoImpl implements IClienteDao {
 
     public ClienteDaoImpl() {
 
-        String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\Empresa.accdb";
+        String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\PruebasEmpresa.accdb";
 
         try {
             conexion = DriverManager.getConnection(databaseURL);
@@ -78,13 +78,14 @@ public class ClienteDaoImpl implements IClienteDao {
 
             Cliente cliente;
             while (rs.next()) {
+                int codigoBBDD = rs.getInt("CodigoBBDD");
                 String nombre = rs.getString("Nombre");
                 String apellido = rs.getString("Apellido");
                 String correo = rs.getString("Correo");
                 String telefono = rs.getString("Telefono");
                 String direccion = rs.getString("Direccion");
 
-                cliente = new Cliente(nombre, apellido, cedula, telefono, direccion, correo);
+                cliente = new Cliente(codigoBBDD, nombre, apellido, cedula, telefono, direccion, correo);
                 return cliente;
             }
 
@@ -98,7 +99,8 @@ public class ClienteDaoImpl implements IClienteDao {
     public void update(Cliente cliente) {
 
         try {
-            String commandoSQL = "UPDATE Clientes SET Cedula=?, Nombre=?, Apellido=?, Correo=?, Telefono=?, Direccion=? WHERE Cedula=?";
+            String commandoSQL = "UPDATE Clientes SET Cedula=?, Nombre=?, Apellido=?, Correo=?, Telefono=?, Direccion=? "
+                    + "WHERE CodigoBBDD=?";
 
             PreparedStatement preparedStatement = conexion.prepareStatement(commandoSQL);
 
@@ -108,7 +110,7 @@ public class ClienteDaoImpl implements IClienteDao {
             preparedStatement.setString(4, cliente.getCorreo());
             preparedStatement.setString(5, cliente.getTelefono());
             preparedStatement.setString(6, cliente.getDireccion());
-            preparedStatement.setString(7, cliente.getCedula());
+            preparedStatement.setInt(7, cliente.getCodigoSistema());
 
             int filasActualizadas = preparedStatement.executeUpdate();
 
@@ -123,12 +125,12 @@ public class ClienteDaoImpl implements IClienteDao {
     }
 
     @Override
-    public void delete(String cedula) {
+    public void delete(int codigoBBDD) {
         try {
-            String comandoSQL = "DELETE FROM Clientes WHERE Cedula=?";
+            String comandoSQL = "DELETE FROM Clientes WHERE CodigoBBDD=?";
 
             PreparedStatement ps = conexion.prepareStatement(comandoSQL);
-            ps.setString(1, cedula);
+            ps.setInt(1, codigoBBDD);
 
             int filaEliminada = ps.executeUpdate();
             if (filaEliminada > 0) {

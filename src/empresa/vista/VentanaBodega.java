@@ -349,17 +349,15 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (controladorCliente.comprobarExistenciaProducto(txtCodigo.getText())) {
-            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro desea eliminar este producto?");
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                controladorCliente.deleteProducto(txtCodigo.getText());
-                JOptionPane.showMessageDialog(this, "Producto eliminado");
-                limpiar();
-                llenarTablaProductos();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Error. Asegurese que no haya editado el codigo del producto antes de eliminarlo");
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro desea eliminar este producto?");
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            controladorCliente.deleteProducto(txtCodigo.getText());
+            JOptionPane.showMessageDialog(this, "Producto eliminado");
+            limpiar();
+            llenarTablaProductos();
         }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
@@ -371,7 +369,9 @@ public class VentanaBodega extends javax.swing.JInternalFrame {
         int stock = (int) tblProductos.getValueAt(filaSeleccionada, 2);
         double precio = (double) tblProductos.getValueAt(filaSeleccionada, 3);
         String categoria = (String) tblProductos.getValueAt(filaSeleccionada, 4);
-
+        
+        controladorCliente.readProducto(codigo);
+        
         txtCodigo.setText(codigo);
         txtAreaDescripcion.setText(descripcion);
         txtFormattedPrecio.setValue((Object) precio);

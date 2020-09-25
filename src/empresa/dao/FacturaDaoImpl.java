@@ -26,7 +26,7 @@ public class FacturaDaoImpl implements IFacturaDao {
     public FacturaDaoImpl() {
 
         try {
-            String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\Empresa.accdb";
+            String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\PruebasEmpresa.accdb";
             conexion = DriverManager.getConnection(databaseURL);
 
             System.out.println("Conexion de productos");
@@ -39,7 +39,7 @@ public class FacturaDaoImpl implements IFacturaDao {
     @Override
     public void create(Factura factura) {
         try {
-            comandoSQL = "INSERT INTO Factura () VALUES (?)";
+            comandoSQL = "INSERT INTO Facturas () VALUES (?)";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
             preparedStatement.setString(0, factura.getNumeroFactura());
@@ -52,7 +52,7 @@ public class FacturaDaoImpl implements IFacturaDao {
             }
 
             for (DetalleFactura DatosFactura : factura.getDetallesFactura()) {
-                comandoSQL = "INSERT INTO DetalleFactura () VALUES (?)";
+                comandoSQL = "INSERT INTO DetallesFacturas () VALUES (?)";
                 preparedStatement = conexion.prepareStatement(comandoSQL);
                 preparedStatement.setString(0, DatosFactura.getIdFactura());
 
@@ -73,7 +73,7 @@ public class FacturaDaoImpl implements IFacturaDao {
     public Factura read(String numeroFactura) {
 
         try {
-            comandoSQL = "SELECT * FROM Factura WHERE NumeroFactura=?";
+            comandoSQL = "SELECT * FROM Facturas WHERE NumeroFactura=?";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
             preparedStatement.setString(1, numeroFactura);
@@ -85,7 +85,7 @@ public class FacturaDaoImpl implements IFacturaDao {
                 //factura = 
             }
 
-            comandoSQL = "SELECT * FROM DetalleFactura WHERE NumeroFactura=?";
+            comandoSQL = "SELECT * FROM DetallesFacturas WHERE NumeroFactura=?";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
             preparedStatement.setString(1, numeroFactura);
@@ -111,9 +111,10 @@ public class FacturaDaoImpl implements IFacturaDao {
     public void update(Factura factura) {
 
         try {
-            comandoSQL = "UPDATE Factura SET NumeroFactura=? WHERE CodigoSistema=?";
+            comandoSQL = "UPDATE Facturas SET NumeroFactura=? WHERE CodigoBBDD=?";
             
             preparedStatement = conexion.prepareStatement(comandoSQL);
+            preparedStatement.setInt(7, factura.getCodigoSistema());
             
         } catch (SQLException e) {
             e.printStackTrace();

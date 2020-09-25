@@ -27,7 +27,7 @@ public class ProductoDaoImpl implements IProductoDao {
     public ProductoDaoImpl() {
 
         try {
-            String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\Empresa.accdb";
+            String databaseURL = "jdbc:ucanaccess://C:\\Users\\Adolfo\\Desktop\\RESPALDO\\Proyectos\\Mami\\BBDD\\PruebasEmpresa.accdb";
             conexion = DriverManager.getConnection(databaseURL);
 
             System.out.println("Conexion de productos");
@@ -40,7 +40,7 @@ public class ProductoDaoImpl implements IProductoDao {
     @Override
     public void create(Producto producto) {
         try {
-            comandoSQL = "INSERT INTO Producto (Codigo, Descripcion, Categoria, Precio, Stock) VALUES (?, ?, ?, ?, ?)";
+            comandoSQL = "INSERT INTO Productos (CodigoProducto, Descripcion, Categoria, PrecioUnitario, StockDisponible) VALUES (?, ?, ?, ?, ?)";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
 
@@ -63,7 +63,7 @@ public class ProductoDaoImpl implements IProductoDao {
     @Override
     public Producto read(String codigo) {
         try {
-            comandoSQL = "SELECT * FROM Producto WHERE Codigo=?";
+            comandoSQL = "SELECT * FROM Productos WHERE CodigoProducto=?";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
 
@@ -73,8 +73,9 @@ public class ProductoDaoImpl implements IProductoDao {
 
             Producto producto;
             while (resultado.next()) {
-                producto = new Producto(resultado.getString("Codigo"), resultado.getInt("Stock"),
-                        resultado.getString("Descripcion"), resultado.getString("Categoria"), resultado.getDouble("Precio"));
+                producto = new Producto(resultado.getInt("CodigoBBDD"), resultado.getString("CodigoProducto"), 
+                        resultado.getInt("StockDisponible"), resultado.getString("Descripcion"), 
+                        resultado.getString("Categoria"), resultado.getDouble("PrecioUnitario"));
 
                 return producto;
             }
@@ -90,7 +91,7 @@ public class ProductoDaoImpl implements IProductoDao {
     public void update(Producto producto) {
 
         try {
-            comandoSQL = "UPDATE Producto SET Codigo=?, Descripcion=?, Categoria=?, Precio=?, Stock=? WHERE Codigo=?";
+            comandoSQL = "UPDATE Productos SET CodigoProducto=?, Descripcion=?, Categoria=?, PrecioUnitario=?, StockDisponible=? WHERE CodigoBBDD=?";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
 
@@ -99,7 +100,8 @@ public class ProductoDaoImpl implements IProductoDao {
             preparedStatement.setString(3, producto.getCategoria());
             preparedStatement.setDouble(4, producto.getPrecio());
             preparedStatement.setInt(5, producto.getStock());
-            preparedStatement.setString(6, producto.getCodigo());
+            preparedStatement.setInt(6, producto.getCodigoSistema());
+            System.out.println(producto.getCodigoSistema());
 
             int filaUpdate = preparedStatement.executeUpdate();
 
@@ -113,14 +115,14 @@ public class ProductoDaoImpl implements IProductoDao {
     }
 
     @Override
-    public void delete(String codigo) {
+    public void delete(int codigoBBDD) {
 
         try {
-            comandoSQL = "DELETE FROM Producto WHERE Codigo=?";
+            comandoSQL = "DELETE FROM Productos WHERE CodigoBBDD=?";
 
             preparedStatement = conexion.prepareStatement(comandoSQL);
 
-            preparedStatement.setString(1, codigo);
+            preparedStatement.setInt(1, codigoBBDD);
 
             int filaEliminada = preparedStatement.executeUpdate();
 
@@ -136,7 +138,7 @@ public class ProductoDaoImpl implements IProductoDao {
     @Override
     public Map<String, Producto> findAll() {
         try {
-            comandoSQL = "SELECT * FROM Producto";
+            comandoSQL = "SELECT * FROM Productos";
 
             statement = conexion.createStatement();
             
@@ -145,8 +147,10 @@ public class ProductoDaoImpl implements IProductoDao {
             Map<String,Producto> listaProductos = new HashMap<>();
             
             while (resultado.next()) {
-                Producto producto = new Producto(resultado.getString("Codigo"), resultado.getInt("Stock"),
-                        resultado.getString("Descripcion"), resultado.getString("Categoria"), resultado.getDouble("Precio"));
+                Producto producto = new Producto(resultado.getInt("CodigoBBDD"), 
+                        resultado.getString("CodigoProducto"), resultado.getInt("StockDisponible"),
+                        resultado.getString("Descripcion"), resultado.getString("Categoria"), 
+                        resultado.getDouble("PrecioUnitario"));
                 
                 listaProductos.put(producto.getCodigo(), producto);
                 
@@ -162,7 +166,7 @@ public class ProductoDaoImpl implements IProductoDao {
     @Override
     public List<Producto> findAllArray(){
         try {
-            comandoSQL = "SELECT * FROM Producto";
+            comandoSQL = "SELECT * FROM Productos";
 
             statement = conexion.createStatement();
             
@@ -171,8 +175,10 @@ public class ProductoDaoImpl implements IProductoDao {
             List<Producto> listaProductos = new ArrayList<>();
             
             while (resultado.next()) {
-                Producto producto = new Producto(resultado.getString("Codigo"), resultado.getInt("Stock"),
-                        resultado.getString("Descripcion"), resultado.getString("Categoria"), resultado.getDouble("Precio"));
+                Producto producto = new Producto(resultado.getInt("CodigoBBDD"), 
+                        resultado.getString("CodigoProducto"), resultado.getInt("StockDisponible"),
+                        resultado.getString("Descripcion"), resultado.getString("Categoria"), 
+                        resultado.getDouble("PrecioUnitario"));
                 
                 listaProductos.add(producto);
                 

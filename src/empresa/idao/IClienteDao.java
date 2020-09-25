@@ -20,7 +20,7 @@ public interface IClienteDao {
     
     public void update(Cliente cliente);
     
-    public void delete(String cedula);
+    public void delete(int codigoBBDD);
     
     public ResultSet findAll();
     

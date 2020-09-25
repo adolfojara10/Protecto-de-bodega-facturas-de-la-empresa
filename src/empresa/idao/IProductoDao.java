@@ -21,7 +21,7 @@ public interface IProductoDao {
     
     public void update(Producto producto);
     
-    public void delete(String codigo);
+    public void delete(int codigoBBDD);
     
     public Map<String, Producto> findAll();
     

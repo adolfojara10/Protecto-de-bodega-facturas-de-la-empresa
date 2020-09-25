@@ -54,7 +54,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         btnCrear = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -113,12 +113,12 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(102, 102, 255));
-        btnEditar.setText("Editar");
-        btnEditar.setEnabled(false);
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setBackground(new java.awt.Color(102, 102, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setEnabled(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -156,7 +156,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar)
                         .addGap(41, 41, 41)
-                        .addComponent(btnEditar)
+                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
                         .addGap(36, 36, 36))))
@@ -197,7 +197,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
                     .addComponent(btnCrear)
                     .addComponent(btnBuscar)
                     .addComponent(btnLimpiar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnActualizar))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -208,7 +208,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,7 +263,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
                 txtFormattedTelefono.setValue(cliente.getTelefono());
                 txtDireccion.setText(cliente.getDireccion());
                 
-                btnEditar.setEnabled(true);
+                btnActualizar.setEnabled(true);
                 btnCrear.setEnabled(false);
             }
 
@@ -278,7 +278,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         
         String cedula = txtFormattedCedula.getText();
@@ -300,7 +300,7 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         }
         
         
-    }//GEN-LAST:event_btnEditarActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     public void limpiar() {
         txtFormattedCedula.setValue("");
@@ -311,14 +311,14 @@ public class VentanaCliente extends javax.swing.JInternalFrame {
         txtDireccion.setText("");
         
         btnCrear.setEnabled(true);
-        btnEditar.setEnabled(false);
+        btnActualizar.setEnabled(false);
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrear;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cbxTipoTelefono;
     private javax.swing.JLabel jLabel1;

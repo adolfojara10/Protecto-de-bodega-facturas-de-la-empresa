@@ -43,21 +43,22 @@ public class ControladorCliente {
 
     public Cliente readCliente(String cedula) {
 
-        return clienteDao.read(cedula);
-
+        cliente = clienteDao.read(cedula);
+        return cliente;
     }
 
     public void updateCliente(String nombres, String apellidos, String cedula, String telefono,
             String direccion, String correo) {
 
-        cliente = new Cliente(nombres, apellidos, cedula, telefono, direccion, correo);
+        cliente = new Cliente(cliente.getCodigoSistema(), nombres, apellidos, cedula, telefono, direccion, correo);
 
         clienteDao.update(cliente);
 
     }
 
     public void deleteCliente(String cedula) {
-        clienteDao.delete(cedula);
+        
+        clienteDao.delete(cliente.getCodigoSistema());
     }
 
     public ResultSet findAll() {
@@ -89,16 +90,19 @@ public class ControladorCliente {
 
     public Producto readProducto(String codigo) {
 
-        return productoDao.read(codigo);
+        producto = productoDao.read(codigo);
+        return producto;
     }
 
     public void actualizarProducto(String codigo, int stock, String descripcion, String categoria, double precio) {
-        producto = new Producto(codigo, stock, descripcion, categoria, precio);
+        producto = new Producto(producto.getCodigoSistema(), codigo, stock, descripcion, categoria, precio);
+        System.out.println(producto.getCodigoSistema());
         productoDao.update(producto);
     }
 
     public void deleteProducto(String codigo) {
-        productoDao.delete(codigo);
+        
+        productoDao.delete(producto.getCodigoSistema());
     }
 
     public Map<String, Producto> findAllProducto() {
